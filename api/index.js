@@ -1,20 +1,29 @@
 const getScreenshot = require('./screenshot');
 const node_url = require('url');
-const readme = 'https://github.com/NeverBehave/now-puppeteer'
+const stringIsAValidUrl = (s) => {
+    try {
+      new URL(s);
+      return true;
+    } catch (err) {
+      return false;
+    }
+  };
 
 module.exports = async function  (req, res) {
-    const { pathname = '/', query = {} } = node_url.parse(req.url, true);
-    if (pathname.length <= 1) {
-        res.status(302)
-        res.setHeader('Location', readme)
-    }
-    const { type = 'png' } = query; // png or jpeg
+    const {  pathname = '/' , query = {} } = node_url.parse(req.url, true);
     let url = pathname.slice(1);
     if (!url.startsWith('http')) {
         url = 'https://' + url; // add protocol if missing
     }
-    const file = await getScreenshot(url, type);
-    res.status(200);
-    res.setHeader('Content-Type', `image/${type}`);
-    res.end(file);
+
+    res.status(200)
+    if (!stringIsAValidUrl(url)) {
+        res.end(`${url} is not vaild.`)
+    } else {
+        const type = query.type === 'png' ? 'png' : 'jpeg'; // png or jpeg
+        const file = await getScreenshot(url, type);
+        
+        res.setHeader('Content-Type', `image/${type}`);
+        res.end(file);
+    }
 };
