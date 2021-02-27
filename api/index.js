@@ -1,4 +1,4 @@
-const getScreenshot = require('./screenshot');
+const { getScreenshot, downloadFont } = require('./screenshot');
 const node_url = require('url');
 const pTime = require('p-time');
 const stringIsAValidUrl = (s) => {
@@ -9,10 +9,6 @@ const stringIsAValidUrl = (s) => {
       return false;
     }
   };
-const downloadFont = async () => {
-  await chrome.font('https://cdn.jsdelivr.net/gh/googlefonts/noto-emoji@master/fonts/NotoColorEmoji.ttf');
-  await chrome.font('https://cdn.jsdelivr.net/gh/googlefonts/noto-cjk@master/NotoSansCJK-Regular.ttc');
-}
 const timedDownload = pTime(downloadFont)
 
 module.exports = async function  (req, res) {
