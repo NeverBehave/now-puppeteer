@@ -1,7 +1,6 @@
 const chrome = require('chrome-aws-lambda');
 const puppeteer = require('puppeteer-core');
 
-
 async function downloadFont() {
     await chrome.font('https://cdn.jsdelivr.net/gh/googlefonts/noto-emoji@master/fonts/NotoColorEmoji.ttf');
     await chrome.font('https://cdn.jsdelivr.net/gh/googlefonts/noto-cjk@master/NotoSansCJK-Regular.ttc');

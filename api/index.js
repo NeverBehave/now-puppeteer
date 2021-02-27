@@ -9,7 +9,7 @@ const stringIsAValidUrl = (s) => {
       return false;
     }
   };
-const timedDownload = pTime(downloadFont)
+const timedDownload = pTime(downloadFont)()
 
 module.exports = async function  (req, res) {
   await timedDownload;
